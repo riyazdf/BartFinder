@@ -97,7 +97,11 @@ def extract_train_direction(tag_line):
 
 
 def find_all_possible_trips(station1, station2, desired_time ="now", query_num =3):
-
+    try:
+        query_num = int(query_num)
+    except ValueError:
+        print "query_num must be an integer - it has been set to 3 for this iteration"
+        query_num = 3
     counter = 1
 
     time, chosen_time  = determine_time(desired_time)
