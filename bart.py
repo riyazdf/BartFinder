@@ -138,6 +138,7 @@ def determine_best_routes(routes, chosen_time, query_num):
         else: 
             sets = len(trains)
             set_counter = 0
+            print("Journey " + str(counter + 1) + ":")
             while set_counter < sets:
                 print(extract_train_direction(details[set_counter*5 + 2]) + "-bound Train:")
                 print("\tDEPART: " +  extract_time_from_tagline(details[set_counter*5 + 1]) + "\n")
@@ -145,7 +146,8 @@ def determine_best_routes(routes, chosen_time, query_num):
                 print("\tARRIVE: " +  extract_time_from_tagline(details[set_counter*5 + 4]) + "\n")
                 print("\t\tTO: " +  extract_station_from_tagline(details[set_counter*5 + 3]) + "\n")
                 set_counter += 1            
-
+            
+            print("\n\n")
             counter += 1
             if counter >= query_num:
                 return
