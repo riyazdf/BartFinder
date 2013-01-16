@@ -1,0 +1,9 @@
+# Riyaz Faizullabhoy
+# 1/14/2013
+
+.DS_Store
+*.pyc
+__pycache__
+*.swp
+venv
+
