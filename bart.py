@@ -4,12 +4,11 @@
 
 """ Given command-line input, formulates and scrapes a URL from bart.gov detailing the requested trip, including times, connections, and fares. Uses BeautifulSoup. """
 
-import bs4
 from bs4 import BeautifulSoup
 import urllib2, urllib
 from datetime import datetime
 from station import *
-import sys, getopt
+import sys, getopt, string
 
 
 def time_compare(trip_time, desired_time):
@@ -72,7 +71,7 @@ def extract_time_from_tagline(tag_line):
             in_tag = False
         elif in_tag:
             continue
-        elif c not in "1234567890:ap":
+        elif c not in ":ap" and c not in string.digits:
             continue
         else:
             time += c
@@ -83,7 +82,7 @@ def extract_station_from_tagline(tag_line):
     tag_string = str(tag_line)
     station = ""
     for c in tag_string:
-        if c not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890":
+        if c not in string.digits and c not in string.uppercase:
             continue
         else:
             station += c
@@ -113,11 +112,10 @@ def find_all_possible_trips(station1, station2, desired_time ="now", query_num =
     fare = ""
     fare_tag = str(soup.find_all("b"))
     for c in fare_tag:
-        if c in "$1234567890.":
+        if c in "$." or c in string.digits:
             fare += c
     print("\n\nFARE: " + fare + "\n")
-    
-    routes = soup.contents[3].find_all("tr")[7:]
+    routes = soup.find_all("tr")[7:]
     return determine_best_routes(routes, chosen_time, query_num)
 
 
